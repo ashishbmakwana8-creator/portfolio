@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashish B Makwana | Full Stack Software Engineer</title>
+    
+    <!-- Google Fonts: Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- Google-Calibrated Design System --- */
+        :root {
+            --bg-base: #ffffff;
+            --bg-surface: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-bg: #eff6ff;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        [data-theme="dark"] {
+            --bg-base: #0b0f19;
+            --bg-surface: #111827;
+            --bg-card: #1f2937;
+            --border-color: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --text-muted: #9ca3af;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-bg: rgba(59, 130, 246, 0.1);
+            --nav-bg: rgba(11, 15, 25, 0.9);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1, h2, h3 { font-weight: 700; color: var(--text-primary); }
+        p { color: var(--text-secondary); margin-bottom: 1rem; }
+        .mono { font-family: 'Fira Code', monospace; color: var(--accent); font-size: 0.9rem; }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section { padding: 5rem 0; border-bottom: 1px solid var(--border-color); }
+        section:last-of-type { border-bottom: none; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo { font-weight: 700; font-size: 1.1rem; text-decoration: none; color: var(--text-primary); }
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        #theme-toggle {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 36px; height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: all 0.2s;
+        }
+        #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Hero Section */
+        #hero { min-height: 85vh; display: flex; align-items: center; padding-top: 70px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.3rem 0.8rem; border-radius: 4px;
+            background: var(--accent-bg); color: var(--accent);
+            font-family: 'Fira Code', monospace; font-size: 0.85rem; font-weight: 500;
+            margin-bottom: 1.5rem; border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); letter-spacing: -0.03em; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.15rem; max-width: 700px; margin-bottom: 2rem; }
+
+        /* Buttons */
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; font-size: 0.95rem; font-weight: 600;
+            border-radius: 6px; text-decoration: none; transition: all 0.2s; cursor: pointer;
+        }
+        .btn-primary { background: var(--accent); color: #ffffff; border: 1px solid var(--accent); }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-outline:hover { background: var(--bg-surface); border-color: var(--text-secondary); }
+
+        /* Section Titles */
+        .section-title { font-size: 1.75rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; }
+        .section-title i { color: var(--accent); font-size: 1.4rem; }
+
+        /* Cards & Grid */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: var(--accent); }
+        
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+        .card-title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
+        .card-subtitle { font-weight: 600; color: var(--text-secondary); margin-bottom: 1rem; display: block; }
+        .card-date { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent); font-weight: 500; }
+
+        ul.bullet-list { padding-left: 1.2rem; color: var(--text-secondary); }
+        ul.bullet-list li { margin-bottom: 0.5rem; font-size: 0.95rem; }
+
+        /* Skills Tags */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+        .skill-category h3 { font-size: 1rem; margin-bottom: 0.75rem; font-family: 'Fira Code', monospace; color: var(--text-primary); }
+        .tag-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tag {
+            font-family: 'Fira Code', monospace; font-size: 0.8rem;
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            color: var(--text-secondary); padding: 0.3rem 0.6rem; border-radius: 4px;
+        }
+
+        /* Footer */
+        footer { padding: 3rem 0; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
+        .footer-links a { color: var(--text-secondary); font-size: 1.2rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--accent); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <a href="#" class="logo">Ashish B Makwana<span>.</span></a>
+            <div style="display: flex; gap: 1.5rem; align-items: center;">
+                <ul class="nav-links">
+                    <li><a href="#about">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#education">Education</a></li>
+                </ul>
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <i class="fa-solid fa-terminal">&nbsp;</i>Full Stack Software Engineer
+            </div>
+            <h1>Building scalable web architectures & systems.</h1>
+            <p>Current MSc IT (IMS & Cloud Technology) student and BCA graduate[cite: 1]. Experienced in building and deploying end-to-end web apps with Python, Django, JavaScript, and MySQL[cite: 1].</p>
+            <div class="btn-group">
+                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="mailto:ashishbmakwana8@gmail.com" class="btn btn-outline"><i class="fa-regular fa-envelope"></i> Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title"><i class="fa-solid fa-code"></i> Technical Competencies</h2>
+            <div class="skills-grid card">
+                <div class="skill-category">
+                    <h3>Languages & Frameworks</h3>
+                    <div class="tag-group">
+                        <span class="tag">Python</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">C</span>
+                        <span class="tag">Django</span>
+                        <span class="tag">Laravel</span>
+                        <span class="tag">Bootstrap</span>
+                        <span class="tag">jQuery</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Databases & Infrastructure</h3>
+                    <div class="tag-group">
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Oracle</span>
+                        <span class="tag">Git & GitHub</span>
+                        <span class="tag">VS Code</span>
+                        <span class="tag">Vercel</span>
+                        <span class="tag">Render</span>
+                        <span class="tag">ChatGPT / Gemini</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title"><i class="fa-solid fa-briefcase"></i> Professional Experience</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">IT Career Service</div>
+                        <span class="card-subtitle">Dash Technologies Inc.</span>
+                    </div>
+                    <span class="card-date">June 2026 – Present[cite: 2]</span>
+                </div>
+                <ul class="bullet-list">
+                    <li>Evaluated and optimized technical resumes, GitHub portfolios, and LinkedIn profiles for software engineering candidates[cite: 2].</li>
+                    <li>Analyzed emerging IT market trends, in-demand technical skills, and certification pathways to optimize internal training resources[cite: 2].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Software Engineer Intern</div>
+                        <span class="card-subtitle">Swastik Infotech[cite: 1]</span>
+                    </div>
+                    <span class="card-date">June 2025 – May 2026[cite: 1]</span>
+                </div>
+                <ul class="bullet-list">
+                    <li>Engineered and maintained end-to-end web applications utilizing a full-stack architecture with Python, Django, JavaScript, HTML, CSS, and MySQL[cite: 1].</li>
+                    <li>Developed backend services, integrated RESTful APIs, and managed database operations to optimize application functionality and performance[cite: 1].</li>
+                    <li>Collaborated with cross-functional team members to design, code, deploy, and debug software solutions[cite: 1].</li>
+                    <li>Participated actively in code reviews and comprehensive software documentation to ensure long-term maintainability[cite: 1].</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Featured Projects</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">DevSphere – AI-Powered Online Education System[cite: 1]</div>
+                        <span class="card-subtitle">Live Full-Stack Project[cite: 1]</span>
+                    </div>
+                    <span class="card-date">January 2026 – April 2026[cite: 1]</span>
+                </div>
+                <ul class="bullet-list" style="margin-bottom: 1.5rem;">
+                    <li>Architected a scalable, full-stack e-learning platform focusing on secure user authentication, registration, and profile workflows[cite: 1].</li>
+                    <li>Engineered a centralized system for course management and enrollment tracking[cite: 1].</li>
+                    <li>Implemented an AI-driven course recommendation engine to suggest tailored educational content based on user interests[cite: 1].</li>
+                    <li>Built a responsive, mobile-friendly interface integrated with advanced course search and filtering capabilities for an optimized user experience[cite: 1].</li>
+                </ul>
+                <div class="tag-group">
+                    <span class="tag">Python</span>
+                    <span class="tag">Django</span>
+                    <span class="tag">MySQL</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Bootstrap</span>
+                    <span class="tag">jQuery</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Master of Science in Information Technology</div>
+                        <span class="card-subtitle">Gujarat University (IMS & Cloud Technology)[cite: 1]</span>
+                    </div>
+                    <span class="card-date">August 2026 – Present[cite: 1]</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Bachelor of Computer Applications (BCA)[cite: 1]</div>
+                        <span class="card-subtitle">Gujarat University[cite: 1]</span>
+                    </div>
+                    <span class="card-date">August 2023 – May 2026[cite: 1]</span>
+                </div>
+                <p style="margin-top: 0.5rem; font-size: 0.95rem; font-weight: 500;">Cumulative CGPA: 7.47[cite: 1]</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="mailto:ashishbmakwana8@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+            <p>Ashish B Makwana &bull; Ahmedabad, Gujarat &bull; +91 98752 12704</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;">Designed with professional clarity standards for technical evaluation.</p>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const icon = themeToggle.querySelector('i');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('portfolio-theme', newTheme);
+            updateIcon(newTheme);
+        });
+
+        function updateIcon(theme) {
+            icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+    </script>
+</body>
+</html>
